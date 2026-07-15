@@ -1,42 +1,36 @@
 {
     "label" : "lock",
-    "action" : "loginctl lock-session",
-    "text" : "lock",
+    "action" : "pidof hyprlock || hyprlock",
+    "text" : "󰌾\nLock",
     "keybind" : "l"
 }
 {
     "label" : "logout",
     "action" : "hyprctl dispatch exit",
-    "text" : "logout",
+    "text" : "󰍃\nLogout",
     "keybind" : "e"
 }
 {
-    "label" : "shutdown",
-    "action" : "systemctl poweroff",
-    "text" : "power_settings_new",
+    "label" : "suspend",
+    "action" : "systemctl suspend",
+    "text" : "󰏤\nSleep",
     "keybind" : "s"
 }
 {
     "label" : "reboot",
     "action" : "systemctl reboot",
-    "text" : "restart_alt",
+    "text" : "\nReboot",
     "keybind" : "r"
 }
 {
-    "label" : "sleep",
-    "action" : "systemctl suspend",
-    "text" : "bedtime",
-    "keybind" : "u"
+    "label" : "shutdown",
+    "action" : "systemctl poweroff",
+    "text" : "󰐥\nShutdown",
+    "keybind" : "p"
 }
 {
-    "label" : "hibernate",
-    "action" : "systemctl hibernate",
-    "text" : "downloading",
-    "keybind" : "h"
-}
-{
-    "label" : "bootloader",
-    "action" : "systemctl reboot --boot-loader-menu=0",
-    "text" : "developer_board",
+    "label" : "firmware",
+    "action" : "systemctl reboot --firmware-setup",
+    "text" : "󰘚\nUEFI",
     "keybind" : "b"
 }

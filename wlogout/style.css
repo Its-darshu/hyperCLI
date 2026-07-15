@@ -1,31 +1,89 @@
+/* ── wlogout — Catppuccin Glassmorphic Power Menu ─────────────────────
+   6-column × 1-row grid.  Launch:  wlogout -b 6 -T 390 -B 390 -c 15
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── Reset ─────────────────────────────────────────────────────────── */
 * {
-	all: unset;
 	background-image: none;
-	transition: 200ms cubic-bezier(0.05, 0.7, 0.1, 1);
-	font-family: 'Material Symbols Outlined';
 }
 
-/* Opaque dark backdrop so nothing behind bleeds through */
+/* ── Backdrop ──────────────────────────────────────────────────────── */
 window {
-	background: rgba(12, 12, 18, 0.96);
+	background-color: rgba(12, 12, 18, 0.88);
 }
 
-/* 7-column × 1-row grid (launched with -b 7).
-   margin controls the gap; buttons expand to fill each cell.
-   Tall vertical margin keeps the single row from stretching full screen height. */
+/* ── Button Base ───────────────────────────────────────────────────── */
 button {
-	color: #cdd6f4;
-	font-size: 2.5rem;
-	background-color: rgba(30, 30, 46, 0.92);
-	border: 2px solid rgba(255, 255, 255, 0.07);
+	color: #bac2de;
+	font-family: 'JetBrainsMono Nerd Font';
+	font-size: 42px;
+	background-color: rgba(30, 30, 46, 0.85);
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgba(205, 214, 244, 0.08);
 	border-radius: 20px;
-	margin: 380px 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 16px;
+	padding-right: 16px;
+	transition: 300ms cubic-bezier(0.05, 0.7, 0.1, 1);
 }
 
+/* ── Generic Hover / Focus ─────────────────────────────────────────── */
 button:focus,
 button:active,
 button:hover {
-	background-color: rgba(137, 220, 235, 0.16);
-	border-color: rgba(137, 220, 235, 0.40);
-	color: #89dceb;
+	background-color: rgba(137, 220, 235, 0.10);
+	border-color: rgba(137, 220, 235, 0.35);
+	color: #cdd6f4;
+}
+
+/* ── Per-Button Accent Colours on Hover ────────────────────────────── */
+
+/* Lock — green */
+button#lock:hover,
+button#lock:focus {
+	background-color: rgba(166, 227, 161, 0.12);
+	border-color: rgba(166, 227, 161, 0.45);
+	color: #a6e3a1;
+}
+
+/* Logout — amber / peach */
+button#logout:hover,
+button#logout:focus {
+	background-color: rgba(250, 179, 135, 0.12);
+	border-color: rgba(250, 179, 135, 0.45);
+	color: #fab387;
+}
+
+/* Suspend — teal */
+button#suspend:hover,
+button#suspend:focus {
+	background-color: rgba(148, 226, 213, 0.12);
+	border-color: rgba(148, 226, 213, 0.45);
+	color: #94e2d5;
+}
+
+/* Reboot — blue */
+button#reboot:hover,
+button#reboot:focus {
+	background-color: rgba(137, 180, 250, 0.12);
+	border-color: rgba(137, 180, 250, 0.45);
+	color: #89b4fa;
+}
+
+/* Shutdown — red */
+button#shutdown:hover,
+button#shutdown:focus {
+	background-color: rgba(243, 139, 168, 0.14);
+	border-color: rgba(243, 139, 168, 0.50);
+	color: #f38ba8;
+}
+
+/* UEFI / BIOS — mauve / purple */
+button#firmware:hover,
+button#firmware:focus {
+	background-color: rgba(203, 166, 247, 0.12);
+	border-color: rgba(203, 166, 247, 0.45);
+	color: #cba6f7;
 }

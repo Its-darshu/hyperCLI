@@ -2,6 +2,7 @@
     "layer": "top",
     "position": "bottom",
     "exclusive": false,
+    "start_hidden": true,
     "height": 40,
     "margin-top": 0,
     "margin-left": 0,
@@ -55,7 +56,8 @@
     },
     "clock": {
         "format": "󰅐  {0:%I:%M %p}   󰃭  {0:%a %d %b}",
-        "tooltip-format": "<big>{0:%Y %B}</big>\n<tt><small>{0:%A, %d %B %Y}</small></tt>"
+        "tooltip-format": "<big>{0:%Y %B}</big>\n<tt><small>{0:%A, %d %B %Y}</small></tt>",
+        "on-click": "xdg-open https://calendar.google.com"
     },
     "cpu": {
         "interval": 2,
@@ -104,7 +106,8 @@
         "tooltip-format-wifi": "󰖩  {essid}\nSignal: {signalStrength}%\nIP: {ipaddr}",
         "tooltip-format-ethernet": "󰈀  {ifname}\nIP: {ipaddr}",
         "tooltip-format-disconnected": "Disconnected",
-        "on-click": "nm-connection-editor",
+        "on-click": "~/.config/hypr/scripts/wifi-menu.sh",
+        "on-click-right": "~/.config/hypr/scripts/wifi-toggle.sh toggle",
         "max-length": 20
     },
     "bluetooth": {
@@ -116,7 +119,9 @@
         "tooltip-format-connected": "{controller_alias}\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}  {device_address}  {device_battery_percentage}%",
-        "on-click": "blueman-manager"
+        "on-click": "blueman-manager",
+        "on-click-right": "~/.config/hypr/scripts/bt-toggle.sh scan",
+        "on-click-middle": "~/.config/hypr/scripts/bt-toggle.sh toggle"
     },
     "backlight": {
         "format": "{icon}  {percent}%",
@@ -169,6 +174,6 @@
     "custom/power": {
         "format": "󰐥",
         "tooltip": false,
-        "on-click": "wlogout -b 7"
+        "on-click": "wlogout -b 6 -T 390 -B 390 -L 200 -R 200 -c 15"
     }
 }
