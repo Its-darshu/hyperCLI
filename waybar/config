@@ -1,8 +1,8 @@
 {
     "layer": "top",
     "position": "bottom",
-    "exclusive": false,
-    "start_hidden": true,
+    "exclusive": true,
+    "start_hidden": false,
     "height": 40,
     "margin-top": 0,
     "margin-left": 0,
