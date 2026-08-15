@@ -1,0 +1,52 @@
+# Minimal single-line prompt.
+# No nerd-font glyphs, no powerline pills, no coloured backgrounds — those
+# rendered as tofu boxes and made every prompt three lines tall.
+# The Fedora logo is fastfetch's, not starship's — untouched.
+#
+#   ~/Project/hyperland main ❯ _
+
+add_newline = false
+
+format = "$directory$git_branch$git_status$cmd_duration$character"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+[directory]
+style = "bold cyan"
+truncate_to_repo = false
+truncation_length = 3
+truncation_symbol = ".../"
+format = "[$path]($style) "
+
+[git_branch]
+symbol = ""
+style = "bold magenta"
+format = "[$branch]($style) "
+
+[git_status]
+style = "bold yellow"
+format = "([$all_status$ahead_behind]($style) )"
+
+# Only mention duration when a command was actually slow.
+[cmd_duration]
+min_time = 2000
+style = "dimmed white"
+format = "[$duration]($style) "
+
+[package]
+disabled = true
+
+[hostname]
+disabled = true
+
+[username]
+disabled = true
+
+[time]
+disabled = true
+
+[memory_usage]
+disabled = true

@@ -18,6 +18,9 @@ if status is-interactive
     #     cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
     # end
 
+    # Tab = autofill, not a completion list. See functions/fish_user_key_bindings.fish
+    # (it must live there: fish sets up key bindings before config.fish is sourced).
+
     # Aliases
     # kitty doesn't clear properly so we need to do this weird printing
     alias clear "printf '\033[2J\033[3J\033[1;1H'"
