@@ -13,7 +13,7 @@ if status is-interactive
     end
     
     # Colors — disabled: this re-applied quickshell's peach palette at runtime
-    # via OSC escapes, overriding kitty's own theme on every new shell.
+    # via OSC escapes, overriding the terminal's own theme on every new shell.
     # if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
     #     cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
     # end
@@ -22,7 +22,7 @@ if status is-interactive
     # (it must live there: fish sets up key bindings before config.fish is sourced).
 
     # Aliases
-    # kitty doesn't clear properly so we need to do this weird printing
+    # Some terminals don't clear scrollback, so we use explicit ANSI escapes
     alias clear "printf '\033[2J\033[3J\033[1;1H'"
     alias celar "printf '\033[2J\033[3J\033[1;1H'"
     alias claer "printf '\033[2J\033[3J\033[1;1H'"
@@ -30,9 +30,6 @@ if status is-interactive
     alias q 'qs -c ii'
     if test "$TERM" != "linux"
         alias ls 'eza --icons'
-    end
-    if test "$TERM" = "xterm-kitty"
-        alias ssh 'kitten ssh'
     end
 
     # System info banner on every new terminal

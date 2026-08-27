@@ -24,7 +24,7 @@ echo "[3/6] Installing UI tools..."
 sudo dnf install -y \
   waybar \
   fuzzel \
-  kitty \
+  gnome-terminal \
   foot \
   thunar \
   thunar-volman
