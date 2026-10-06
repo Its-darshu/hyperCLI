@@ -49,7 +49,7 @@ set_wallpaper() {
     sleep 0.2
 
     # Determine mpv options based on power source
-    local mpv_opts="no-audio loop hwdec=auto panscan=1.0"
+    local mpv_opts="no-audio loop hwdec=auto panscan=0.0"
     if is_on_battery; then
         # Battery optimization: cap playback to 24fps to save GPU/CPU cycles
         mpv_opts="$mpv_opts vf=fps=24"
