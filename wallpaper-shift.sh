@@ -5,7 +5,7 @@ STATE_FILE="$HOME/.config/hypr/current_wallpaper"
 
 mkdir -p "$WALLPAPER_DIR" "$(dirname "$STATE_FILE")"
 
-# Find video, gif, and static image files
+# Find video, gif, and static image files (ignoring temp source files)
 mapfile -t WALLPAPERS < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( \
     -iname "*.mp4" -o \
     -iname "*.webm" -o \
@@ -15,24 +15,12 @@ mapfile -t WALLPAPERS < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( \
     -iname "*.jpg" -o \
     -iname "*.jpeg" -o \
     -iname "*.webp" \
-\) | sort)
+\) ! -name "source_4k_*" | sort)
 
 if [ ${#WALLPAPERS[@]} -eq 0 ]; then
     notify-send "Wallpaper Shifter" "No wallpaper files found in $WALLPAPER_DIR" -u critical
     exit 1
 fi
-
-is_on_battery() {
-    for bat in /sys/class/power_supply/BAT*; do
-        if [ -f "$bat/status" ]; then
-            status=$(cat "$bat/status" 2>/dev/null)
-            if [[ "$status" == "Discharging" ]]; then
-                return 0
-            fi
-        fi
-    done
-    return 1
-}
 
 set_wallpaper() {
     local target="$1"
@@ -48,37 +36,26 @@ set_wallpaper() {
     killall -9 mpvpaper 2>/dev/null || true
     sleep 0.2
 
-    # Determine mpv options based on power source
-    local mpv_opts="no-audio loop hwdec=auto panscan=0.0"
-    if is_on_battery; then
-        # Battery optimization: cap playback to 24fps to save GPU/CPU cycles
-        mpv_opts="$mpv_opts vf=fps=24"
-    fi
-
-    # Launch wallpaper
-    nohup mpvpaper -o "$mpv_opts" '*' "$target" > /dev/null 2>&1 &
+    # Launch 4K wallpaper with full screen fill (--keepaspect=no) and hardware decoding
+    nohup mpvpaper -o "no-audio loop hwdec=auto --keepaspect=no" '*' "$target" > /dev/null 2>&1 &
 
     # Send OS notification
     local name
     name=$(basename "$target")
-    local bat_msg=""
-    if is_on_battery; then
-        bat_msg=" ⚡ (Battery Mode: 24fps)"
-    fi
-    notify-send "Wallpaper Changed" "Active wallpaper:\n<b>$name</b>$bat_msg" -i image-x-generic -r 9911
+    notify-send "Wallpaper Changed" "Active wallpaper:\n<b>$name</b> (4K Full Screen)" -i image-x-generic -r 9911
 }
 
 toggle_wallpaper() {
     if pgrep -x mpvpaper >/dev/null; then
         killall -9 mpvpaper 2>/dev/null || true
-        notify-send "Live Wallpaper Paused" "Stopped rendering to save battery power" -i media-playback-pause -r 9911
+        notify-send "Live Wallpaper Paused" "Wallpaper rendering paused" -i media-playback-pause -r 9911
     else
         if [ -f "$STATE_FILE" ] && [ -f "$(cat "$STATE_FILE")" ]; then
             set_wallpaper "$(cat "$STATE_FILE")"
         else
             set_wallpaper "${WALLPAPERS[0]}"
         fi
-        notify-send "Live Wallpaper Resumed" "Rendering resumed" -i media-playback-start -r 9911
+        notify-send "Live Wallpaper Resumed" "Wallpaper rendering resumed" -i media-playback-start -r 9911
     fi
 }
 
