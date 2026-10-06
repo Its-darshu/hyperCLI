@@ -4,3 +4,12 @@
 
 # Local-only project memory for Claude Code (not shared)
 CLAUDE.md
+
+# Ignore wallpaper videos and state files
+wallpapers/
+Videos/
+*.mp4
+*.webm
+*.mkv
+*.avi
+current_wallpaper
