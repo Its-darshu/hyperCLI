@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
 # Adjust volume and show a custom Dunst OSD progress bar.
 
-# Get current volume and mute state
-get_volume() {
-    wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}'
-}
-
-is_muted() {
-    wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q "\[MUTED\]"
-}
-
 case "$1" in
     up)
         wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
@@ -24,9 +15,11 @@ case "$1" in
         ;;
 esac
 
-vol=$(get_volume)
+# Query audio state in a single invocation
+vol_raw=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+vol=$(awk '{print int($2 * 100)}' <<< "$vol_raw")
 
-if is_muted || [ "$vol" -eq 0 ]; then
+if [[ "$vol_raw" == *"[MUTED]"* ]] || [ "${vol:-0}" -eq 0 ]; then
     dunstify -a "Volume" -h string:x-dunst-stack-tag:volume -i audio-volume-muted "Muted" -t 1500
 else
     # Show volume progress bar (using Dunst's built-in progress bar capability)

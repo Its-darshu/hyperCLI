@@ -53,6 +53,7 @@ case "${1:-manager}" in
             bluetoothctl power off
             notify "Bluetooth OFF"
         else
+            rfkill unblock bluetooth 2>/dev/null || true
             bluetoothctl power on
             notify "Bluetooth ON"
         fi

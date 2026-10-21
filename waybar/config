@@ -1,8 +1,8 @@
 {
     "layer": "top",
     "position": "bottom",
-    "exclusive": true,
-    "start_hidden": false,
+    "exclusive": false,
+    "start_hidden": true,
     "height": 40,
     "margin-top": 0,
     "margin-left": 0,
@@ -158,7 +158,7 @@
         "return-type": "json",
         "exec": "~/.config/hypr/scripts/audio-switcher.sh status",
         "on-click": "~/.config/hypr/scripts/audio-switcher.sh popup",
-        "interval": 2,
+        "interval": 30,
         "signal": 8,
         "tooltip": true
     },

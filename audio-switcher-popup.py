@@ -18,8 +18,9 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('GtkLayerShell', '0.1')
 from gi.repository import Gtk, Gdk, GtkLayerShell, GLib
 
-PINNED_FILE = "/tmp/waybar-pinned"
-AUTOHIDE_PID_FILE = "/tmp/waybar-autohide.pid"
+RUNTIME_DIR = os.environ.get("XDG_RUNTIME_DIR", "/tmp")
+PINNED_FILE = os.path.join(RUNTIME_DIR, "waybar-pinned")
+AUTOHIDE_PID_FILE = os.path.join(RUNTIME_DIR, "waybar-autohide.pid")
 
 def pin_waybar():
     try:

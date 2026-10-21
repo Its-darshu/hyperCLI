@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Toggle Waybar autohide pinning and exclusive space.
 
-pinned_file="/tmp/waybar-pinned"
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+pinned_file="$runtime_dir/waybar-pinned"
+pid_file="$runtime_dir/waybar-autohide.pid"
 waybar_config="$HOME/.config/waybar/config"
 project_config="$HOME/Project/hyperland/waybar/config"
 
@@ -28,8 +30,8 @@ else
 fi
 
 # Send SIGUSR2 to waybar-autohide.sh to immediately apply the change!
-if [ -f /tmp/waybar-autohide.pid ]; then
-    kill -USR2 "$(cat /tmp/waybar-autohide.pid)" 2>/dev/null || true
+if [ -f "$pid_file" ]; then
+    kill -USR2 "$(cat "$pid_file")" 2>/dev/null || true
 fi
 
 # Restart waybar to apply exclusive zone setting

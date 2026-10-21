@@ -12,14 +12,14 @@ if pgrep -x fuzzel >/dev/null; then
     exit 0
 fi
 
-read -r sx sy < <(hyprctl cursorpos -j 2>/dev/null | jq -r '"\(.x) \(.y)"')
+IFS=', ' read -r sx sy <<< "$(hyprctl cursorpos 2>/dev/null)"
 
 fuzzel &
 fpid=$!
 
 # Watch the cursor while fuzzel is running.
 while kill -0 "$fpid" 2>/dev/null; do
-    read -r cx cy < <(hyprctl cursorpos -j 2>/dev/null | jq -r '"\(.x) \(.y)"')
+    IFS=', ' read -r cx cy <<< "$(hyprctl cursorpos 2>/dev/null)"
     if [[ "$cx" =~ ^-?[0-9]+$ && "$cy" =~ ^-?[0-9]+$ ]]; then
         dx=$(( cx - sx )); dy=$(( cy - sy ))
         (( dx < 0 )) && dx=$(( -dx ))

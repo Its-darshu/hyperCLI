@@ -7,11 +7,16 @@
 reveal_margin=20    # reveal when cursor is within this many px of the bottom edge
 hide_margin=80      # hide when cursor moves above this many px from the bottom
 poll=0.12           # seconds between cursor checks
-pinned_file="/tmp/waybar-pinned"
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+pinned_file="$runtime_dir/waybar-pinned"
+pid_file="$runtime_dir/waybar-autohide.pid"
 
 # Save PID for signaling and clean up on exit
-echo $$ > /tmp/waybar-autohide.pid
-trap "rm -f /tmp/waybar-autohide.pid" EXIT
+echo $$ > "$pid_file"
+cleanup() {
+    rm -f "$pid_file"
+}
+trap cleanup EXIT INT TERM
 
 screen_height() {
     hyprctl monitors -j 2>/dev/null \
@@ -46,11 +51,13 @@ while true; do
         forced_check=0
     fi
 
-    cur_pid=$(pgrep -x waybar | head -1)
-    [ -z "$cur_pid" ] && continue
+    # Verify Waybar is running without spawning subshells/processes every 120ms.
+    # kill -0 is a fast shell builtin syscall.
+    if ! kill -0 "$last_pid" 2>/dev/null; then
+        cur_pid=$(pgrep -x waybar 2>/dev/null | head -n 1)
+        [ -z "$cur_pid" ] && continue
 
-    # Waybar restarted — sync state variables with actual config value
-    if [ "$cur_pid" != "$last_pid" ]; then
+        # Waybar restarted — sync state variables with actual config value
         sleep 0.5
         if grep -q '"start_hidden": true' "$HOME/.config/waybar/config" 2>/dev/null; then
             visible=0
