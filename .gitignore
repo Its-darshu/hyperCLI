@@ -1,6 +1,9 @@
 .claude/
 *.log
 *.tmp
+__pycache__/
+*.bak*
+*.backup*
 
 # Local-only project memory for Claude Code (not shared)
 CLAUDE.md

@@ -1,8 +1,8 @@
 {
     "layer": "top",
     "position": "bottom",
-    "exclusive": false,
-    "start_hidden": true,
+    "exclusive": true,
+    "start_hidden": false,
     "height": 40,
     "margin-top": 0,
     "margin-left": 0,
@@ -25,6 +25,7 @@
         "bluetooth",
         "backlight",
         "wireplumber",
+        "custom/audio-switcher",
         "battery",
         "custom/power"
     ],
@@ -152,6 +153,15 @@
         "tooltip": true,
         "tooltip-format": "Volume: {volume}%\nNode: {node_name}"
     },
+    "custom/audio-switcher": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/audio-switcher.sh status",
+        "on-click": "~/.config/hypr/scripts/audio-switcher.sh popup",
+        "interval": 2,
+        "signal": 8,
+        "tooltip": true
+    },
     "battery": {
         "states": {
             "good": 95,
@@ -174,6 +184,6 @@
     "custom/power": {
         "format": "󰐥",
         "tooltip": false,
-        "on-click": "wlogout -b 6 -T 390 -B 390 -L 200 -R 200 -c 15"
+        "on-click": "wlogout -b 1"
     }
 }

@@ -1,36 +1,40 @@
 {
     "label" : "lock",
     "action" : "pidof hyprlock || hyprlock",
-    "text" : "󰌾\nLock",
-    "keybind" : "l"
-}
-{
-    "label" : "logout",
-    "action" : "hyprctl dispatch exit",
-    "text" : "󰍃\nLogout",
-    "keybind" : "e"
+    "text" : "LOCK",
+    "keybind" : "l",
+    "width" : 1.0,
+    "height" : 0.5
 }
 {
     "label" : "suspend",
     "action" : "systemctl suspend",
-    "text" : "󰏤\nSleep",
-    "keybind" : "s"
+    "text" : "SLEEP",
+    "keybind" : "s",
+    "width" : 1.0,
+    "height" : 0.5
+}
+{
+    "label" : "logout",
+    "action" : "hyprctl dispatch exit",
+    "text" : "LOGOUT",
+    "keybind" : "e",
+    "width" : 1.0,
+    "height" : 0.5
 }
 {
     "label" : "reboot",
     "action" : "systemctl reboot",
-    "text" : "\nReboot",
-    "keybind" : "r"
+    "text" : "REBOOT",
+    "keybind" : "r",
+    "width" : 1.0,
+    "height" : 0.5
 }
 {
     "label" : "shutdown",
     "action" : "systemctl poweroff",
-    "text" : "󰐥\nShutdown",
-    "keybind" : "p"
-}
-{
-    "label" : "firmware",
-    "action" : "systemctl reboot --firmware-setup",
-    "text" : "󰘚\nUEFI",
-    "keybind" : "b"
+    "text" : "SHUTDOWN",
+    "keybind" : "p",
+    "width" : 1.0,
+    "height" : 0.5
 }
