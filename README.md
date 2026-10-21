@@ -1,127 +1,71 @@
-# hyperCLI — Hyprland Dotfiles for Fedora
+# hyperCLI
 
-My Hyprland compositor config for Fedora 43+. Catppuccin-inspired theme with blur, rounded corners, and smooth animations.
+A minimalist, macOS & iOS-inspired **Liquid Glass** desktop environment for Hyprland on Fedora Linux.
 
-## Quick Install
+---
+
+## Highlights
+
+- **Liquid Glass Waybar**: Floating segmented frosted glass bar with real hardware blur, hover-to-reveal autohide, and system telemetry.
+- **macOS Alt+Tab Switcher**: Centered horizontal window switcher with MRU ordering, application icons, window titles, workspace badges, and smooth keyboard navigation.
+- **Audio Output Switcher**: Control Center style popup for 1-click switching between Bluetooth, speakers, headphones, and HDMI audio.
+- **Minimalist Power Menu**: Clean typography-first `wlogout` interface for quick system actions.
+- **Live Wallpaper Engine**: Smooth video wallpapers via `mpvpaper` with automatic battery optimization.
+
+---
+
+## Quick Start
 
 ```bash
+# 1. Clone repository
+git clone https://github.com/Its-darshu/hyperCLI.git ~/Project/hyperland
+cd ~/Project/hyperland
+
+# 2. Run the automated installer
 bash setup-hyprland-fedora.sh
+
+# 3. Log out and select Hyprland at the login screen
 ```
 
-Then log out and select **Hyprland** as your session at the login screen.
+> For the comprehensive guide, configuration mapping, and complete cheat sheet, see **[INSTRUCTIONS.md](INSTRUCTIONS.md)**.
 
-## What's Included
+---
 
-| File | Purpose |
-|------|---------|
-| `hyprland.conf` | Main config — theme, animations, input |
-| `keybinds.conf` | All keyboard shortcuts |
-| `autostart.conf` | Apps launched on startup |
-| `hypridle.conf` | Idle / screen timeout rules |
-| `rules.conf` | Window & workspace rules |
-| `waybar/config` | Status bar layout |
-| `waybar/style.css` | Status bar styling |
-| `setup-hyprland-fedora.sh` | One-shot package installer |
+## Essential Shortcuts
 
-## Behaviour
+| Shortcut | Action |
+| :--- | :--- |
+| `Alt + Tab` | Window Switcher (cycle forward; release Alt to focus) |
+| `Alt + Shift + Tab` | Window Switcher (cycle backward) |
+| `Super + Enter` | Open Terminal (`gnome-terminal`) |
+| `Super + A` | Application Launcher (`fuzzel`) |
+| `Super + Q` | Close Active Window |
+| `Super + E` | File Manager (`thunar`) |
+| `Super + B` | Web Browser (`brave-browser`) |
+| `Super + Up / Down` | Maximize / Minimize Window |
+| `Super + 1` .. `0` | Switch Workspace 1–10 |
+| `Super + L` | Lock Screen (`hyprlock`) |
+| `Super + P` | Power Menu (`wlogout`) |
 
-- **Startup** — gnome-terminal opens automatically when Hyprland starts
-- **No wallpaper** — starts with a plain black background; set one manually with `swww-daemon & swww img /path/to/image.jpg`
-- **Hover to focus** — move your mouse over any window to make it active instantly, no clicking needed
-- **Side-by-side tiling** — new windows always split to the right, dividing the screen equally (50/50)
-- **Same workspace** — all apps open in your current workspace, nothing jumps to another
-- **No borders** — windows have no border, only shadow and rounding for separation
+---
 
-## Key Bindings
+## Repository Structure
 
-### Apps
-| Key | Action |
-|-----|--------|
-| `Super + Enter` | Terminal (gnome-terminal) |
-| `Super + Q` | Close window |
-| `Super + A` | App launcher (fuzzel) |
-| `Super + E` | File manager (thunar) |
-| `Super + B` | Browser (brave) |
+| File / Folder | Purpose |
+| :--- | :--- |
+| [`hyprland.conf`](hyprland.conf) | Primary Hyprland configuration, monitors, animations, blur |
+| [`keybinds.conf`](keybinds.conf) | Keybindings and modifier release triggers |
+| [`window-switcher.py`](window-switcher.py) | Liquid Glass Alt+Tab switcher daemon |
+| [`switcher.sh`](switcher.sh) | Switcher IPC CLI and launcher script |
+| [`audio-switcher-popup.py`](audio-switcher-popup.py) | Audio device selector popup |
+| [`waybar/`](waybar/) | Liquid Glass status bar layout and stylesheet |
+| [`wlogout/`](wlogout/) | Fullscreen typography power menu layout and CSS |
+| [`autostart.conf`](autostart.conf) | Startup daemons and background services |
+| [`rules.conf`](rules.conf) | Window placement, floating, and layer blur rules |
+| [`INSTRUCTIONS.md`](INSTRUCTIONS.md) | Detailed installation, configuration, and keybinding guide |
 
-### Window Management
-| Key | Action |
-|-----|--------|
-| `Super + Up` | Maximize — or restore the most recently minimized window |
-| `Super + Down` | Minimize (hide) window |
-| `Super + F` | Fullscreen |
-| `Super + V` | Toggle floating |
-| `Super + J` | Toggle split direction (dwindle) |
-| `Super + ;` | Pseudotile (dwindle) |
-| `Super + Shift + arrows` | Move window (within workspace) |
-| `Super + Alt + arrows` | Resize window |
-| `Super + Left / Right` | Move focus left / right |
-| `Super + Ctrl + H/J/K/L` | Move focus (vim keys) |
-| `Super + LMB drag` | Move window (within workspace) |
-| `Super + RMB drag` | Resize window |
+---
 
-### Window Switcher (hyprswitch)
-> One-time install required: `bash setup-window-tools.sh`
+## License
 
-| Key | Action |
-|-----|--------|
-| `Alt + Tab` | Hold Alt, tap Tab to cycle through all windows (across every workspace, incl. minimized); release Alt to switch |
-| `Alt + Shift + Tab` | Same, cycling backwards |
-| `Super + Tab` | Grid overview of every window grouped by workspace |
-
-### Session
-| Key | Action |
-|-----|--------|
-| `Super + L` | Lock screen |
-| `Super + P` | Power menu (wlogout) |
-| `Super + Shift + M` | Exit Hyprland |
-
-### Screenshots
-| Key | Action |
-|-----|--------|
-| `Super + S` | Screenshot region (saved to ~/Pictures/Screenshots) |
-| `Super + Shift + S` | Screenshot region → clipboard |
-| `Print` | Full screenshot |
-
-### Workspaces
-| Key | Action |
-|-----|--------|
-| `Super + 1-9, 0` | Switch to workspace 1–10 |
-| `Super + Shift + 1-9, 0` | Move window to workspace 1–10 (stay put) |
-| `Super + Ctrl + Left / Right` | Move window to the adjacent workspace and follow it |
-| `Super + scroll` | Cycle workspaces on bar |
-
-> `Super + Tab` opens the window overview (see **Window Switcher** above), not workspace cycling.
-
-### Scratchpad
-| Key | Action |
-|-----|--------|
-| `Super + ~` | Toggle scratchpad |
-| `Super + Shift + ~` | Move window to scratchpad |
-
-### Media & System
-| Key | Action |
-|-----|--------|
-| `XF86AudioRaiseVolume` | Volume up 5% |
-| `XF86AudioLowerVolume` | Volume down 5% |
-| `XF86AudioMute` | Toggle mute |
-| `XF86AudioMicMute` | Toggle mic mute |
-| `XF86MonBrightnessUp` | Brightness up 5% |
-| `XF86MonBrightnessDown` | Brightness down 5% |
-| `XF86AudioNext/Prev` | Next / previous track |
-| `XF86AudioPlay/Pause` | Play / pause |
-
-## Apps Used
-
-- **Terminal**: gnome-terminal
-- **Launcher**: fuzzel
-- **Window switcher**: hyprswitch (Alt+Tab / Super+Tab overview)
-- **Bar**: waybar
-- **Wallpaper**: swww (disabled at startup — run manually)
-- **Lock**: hyprlock
-- **Idle**: hypridle
-- **Notifications**: dunst
-- **File manager**: thunar
-- **Power menu**: wlogout
-- **Network tray**: nm-applet
-- **Bluetooth tray**: blueman-applet
-- **Clipboard**: cliphist + wl-paste
+Personal dotfiles — feel free to use, modify, and adapt for your own setup.
