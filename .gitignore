@@ -5,6 +5,9 @@ __pycache__/
 *.bak*
 *.backup*
 
+# Local hardware DRM symlinks
+*-card
+
 # Local-only project memory for Claude Code (not shared)
 CLAUDE.md
 
