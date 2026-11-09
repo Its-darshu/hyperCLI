@@ -139,6 +139,7 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 | `XF86MonBrightnessDown` | Display Brightness Down (-5%) with on-screen HUD |
 | `Super + N` | Toggle Night Light (warm color filter via `hyprsunset`) |
 | `Super + Shift + B` | Toggle Waybar autohide / pin status |
+| `Super + Ctrl + B` | Toggle Waybar position (top ↔ bottom) |
 | `XF86AudioPlay / Pause` | Media Play / Pause (`playerctl`) |
 | `XF86AudioNext / Prev` | Next / Previous track (`playerctl`) |
 
@@ -161,7 +162,8 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 
 ### Liquid Glass Waybar & Autohide
 - **Design**: Floating segmented frosted glass capsules (Workspaces & Title, Clock & Calendar, Hardware & Controls).
-- **Autohide Daemon**: Managed by `waybar-autohide.sh`. Waybar remains tucked away at the bottom edge and reveals automatically on bottom-edge mouse hover.
+- **Autohide Daemon**: Managed by `waybar-autohide.sh`. Waybar remains tucked away at the active screen edge (top or bottom) and reveals automatically on edge mouse hover.
+- **Position Toggle**: Press `Super + Ctrl + B` to switch Waybar position between **top** and **bottom** instantly and persistently. Autohide edge tracking automatically adjusts to the active position.
 - **Pinning**: Press `Super + Shift + B` to pin the bar permanently visible or unpin it back to autohide mode.
 
 ### Interactive Audio Output Switcher

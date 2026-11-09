@@ -15,12 +15,22 @@ pid_file="$runtime_dir/waybar-autohide.pid"
 echo $$ > "$pid_file"
 cleanup() {
     rm -f "$pid_file"
+    exit 0
 }
-trap cleanup EXIT INT TERM
+trap cleanup INT TERM
+trap 'rm -f "$pid_file"' EXIT
 
 screen_height() {
     hyprctl monitors -j 2>/dev/null \
         | jq -r 'first(.[] | select(.focused)) // .[0] | (.height / .scale) | floor'
+}
+
+get_position() {
+    if grep -q '"position": *"top"' "$HOME/.config/waybar/config" 2>/dev/null; then
+        echo "top"
+    else
+        echo "bottom"
+    fi
 }
 
 pkill -x waybar 2>/dev/null
@@ -38,9 +48,10 @@ fi
 
 last_pid=$(pgrep -x waybar | head -1)
 sh=$(screen_height)
+pos_mode=$(get_position)
 pid_check_counter=0
 
-# Handle USR2 signal to instantly apply pin state
+# Handle USR2 signal to instantly apply pin or position state
 forced_check=0
 trap "forced_check=1" USR2
 
@@ -49,6 +60,7 @@ while true; do
         sleep "$poll"
     else
         forced_check=0
+        pos_mode=$(get_position)
     fi
 
     # Verify Waybar is running without spawning subshells/processes every 120ms.
@@ -64,6 +76,7 @@ while true; do
         else
             visible=1
         fi
+        pos_mode=$(get_position)
         last_pid="$cur_pid"
         continue
     fi
@@ -83,15 +96,26 @@ while true; do
     [ -z "$y" ] && continue
     [ -z "$sh" ] && sh=$(screen_height) && [ -z "$sh" ] && continue
 
-    reveal_at=$((sh - reveal_margin))
-    hide_at=$((sh - hide_margin))
+    if [ "$pos_mode" = "top" ]; then
+        if [ "$visible" -eq 0 ] && [ "$y" -le "$reveal_margin" ]; then
+            pkill -SIGUSR1 -x waybar && visible=1
+        elif [ "$visible" -eq 1 ] && [ "$y" -ge "$hide_margin" ]; then
+            # Only hide if NOT pinned (extra check for safety)
+            if [ ! -f "$pinned_file" ]; then
+                pkill -SIGUSR1 -x waybar && visible=0
+            fi
+        fi
+    else
+        reveal_at=$((sh - reveal_margin))
+        hide_at=$((sh - hide_margin))
 
-    if [ "$visible" -eq 0 ] && [ "$y" -ge "$reveal_at" ]; then
-        pkill -SIGUSR1 -x waybar && visible=1
-    elif [ "$visible" -eq 1 ] && [ "$y" -le "$hide_at" ]; then
-        # Only hide if NOT pinned (extra check for safety)
-        if [ ! -f "$pinned_file" ]; then
-            pkill -SIGUSR1 -x waybar && visible=0
+        if [ "$visible" -eq 0 ] && [ "$y" -ge "$reveal_at" ]; then
+            pkill -SIGUSR1 -x waybar && visible=1
+        elif [ "$visible" -eq 1 ] && [ "$y" -le "$hide_at" ]; then
+            # Only hide if NOT pinned (extra check for safety)
+            if [ ! -f "$pinned_file" ]; then
+                pkill -SIGUSR1 -x waybar && visible=0
+            fi
         fi
     fi
 done
