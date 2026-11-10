@@ -138,6 +138,7 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 | `XF86MonBrightnessUp` | Display Brightness Up (+5%) with on-screen HUD |
 | `XF86MonBrightnessDown` | Display Brightness Down (-5%) with on-screen HUD |
 | `Super + N` | Toggle Night Light (warm color filter via `hyprsunset`) |
+| `Super + Shift + T` | Toggle Dark / White (Light) theme (`theme-toggle.sh`) |
 | `Super + Shift + B` | Toggle Waybar autohide / pin status |
 | `Super + Ctrl + B` | Toggle Waybar position (top ↔ bottom) |
 | `XF86AudioPlay / Pause` | Media Play / Pause (`playerctl`) |
@@ -165,6 +166,11 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 - **Autohide Daemon**: Managed by `waybar-autohide.sh`. Waybar remains tucked away at the active screen edge (top or bottom) and reveals automatically on edge mouse hover.
 - **Position Toggle**: Press `Super + Ctrl + B` to switch Waybar position between **top** and **bottom** instantly and persistently. Autohide edge tracking automatically adjusts to the active position.
 - **Pinning**: Press `Super + Shift + B` to pin the bar permanently visible or unpin it back to autohide mode.
+
+### Dark & White Theme Switcher
+- **Waybar Toggle Button**: Click the theme toggle icon (`󰖔` Moon in dark mode / `󰖙` Sun in light mode) in the right Waybar island to switch the system theme between Dark and White/Light mode.
+- **Keyboard Shortcut**: Press `Super + Shift + T` to toggle the system theme from anywhere.
+- **System Integration**: Dynamically toggles system GTK themes (`adw-gtk3-dark` ↔ `adw-gtk3`), desktop color-scheme (`prefer-dark` ↔ `prefer-light`), and GTK3/GTK4 `settings.ini`, updating all GTK and desktop applications instantly while keeping the terminal permanently in dark mode and preserving Waybar's liquid glass design.
 
 ### Interactive Audio Output Switcher
 - Clicking the audio module on Waybar triggers `audio-switcher-popup.py`.

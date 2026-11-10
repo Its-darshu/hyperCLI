@@ -27,6 +27,7 @@
         "wireplumber",
         "custom/audio-switcher",
         "battery",
+        "custom/theme",
         "custom/power"
     ],
     "hyprland/workspaces": {
@@ -180,6 +181,15 @@
             "󰁹"
         ],
         "tooltip-format": "Battery: {capacity}%\nHealth: {health}%\n{timeTo}\nPower draw: {power}W"
+    },
+    "custom/theme": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/theme-toggle.sh status",
+        "on-click": "~/.config/hypr/scripts/theme-toggle.sh toggle",
+        "interval": 3600,
+        "signal": 9,
+        "tooltip": true
     },
     "custom/power": {
         "format": "󰐥",

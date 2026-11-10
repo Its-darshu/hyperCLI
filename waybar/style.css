@@ -62,6 +62,7 @@ window#waybar > box:backdrop,
 #wireplumber,
 #custom-audio-switcher,
 #battery,
+#custom-theme,
 #custom-power {
     background:          transparent;
     background-color:    transparent;
@@ -313,6 +314,33 @@ window#waybar > box:backdrop,
 
 @keyframes blink {
     to { background: rgba(248, 113, 113, 0.22); }
+}
+
+/* ── Dark / White Theme Toggle Button ────────────── */
+#custom-theme {
+    background:    rgba(255, 255, 255, 0.08);
+    border:        1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    color:         #fde047;
+    font-size:     13px;
+    font-weight:   700;
+    padding:       2px 8px;
+    margin:        1px 2px;
+}
+
+#custom-theme:hover {
+    background:    rgba(253, 224, 71, 0.20);
+    border-color:  rgba(253, 224, 71, 0.45);
+    color:         #ffffff;
+    box-shadow:    0 0 10px rgba(253, 224, 71, 0.25);
+}
+
+#custom-theme.light {
+    color:         #f59e0b;
+}
+
+#custom-theme.dark {
+    color:         #fde047;
 }
 
 /* ── iOS Control Center Power Button ────────────── */
