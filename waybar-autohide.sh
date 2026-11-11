@@ -33,9 +33,9 @@ get_position() {
     fi
 }
 
-pkill -x waybar 2>/dev/null
+pkill -x waybar 2>/dev/null || true
 sleep 0.3
-waybar &
+hyprctl dispatch exec -- waybar
 until pgrep -x waybar >/dev/null; do sleep 0.2; done
 sleep 0.2
 

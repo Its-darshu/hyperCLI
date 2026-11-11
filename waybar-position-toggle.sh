@@ -77,8 +77,8 @@ if pgrep -x waybar >/dev/null; then
     sleep 0.05
 fi
 
-# Launch the new Waybar instance (explicitly closing lock FD for child)
-nohup waybar >/dev/null 2>&1 200>&- &
+# Launch the new Waybar instance via Hyprland dispatch
+hyprctl dispatch exec -- waybar
 
 # Wait for Waybar to launch
 for i in {1..20}; do
