@@ -13,10 +13,6 @@ path = "src/bin/window_switcher.rs"
 name = "audio-switcher-popup"
 path = "src/bin/audio_switcher_popup.rs"
 
-[[bin]]
-name = "waybar-autohide"
-path = "src/bin/waybar_autohide.rs"
-
 [dependencies]
 gtk4 = "0.9"
 gtk4-layer-shell = "0.4"

@@ -37,4 +37,4 @@ fi
 # Restart waybar to apply exclusive zone setting
 pkill -x waybar
 sleep 0.3
-waybar >/dev/null 2>&1 &
+nohup waybar >/dev/null 2>&1 &

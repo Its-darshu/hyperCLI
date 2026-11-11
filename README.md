@@ -57,11 +57,10 @@ bash setup-hyprland-fedora.sh
 | [`keybinds.conf`](keybinds.conf) | Keybindings and modifier release triggers |
 | [`src/bin/window_switcher.rs`](src/bin/window_switcher.rs) | High-performance Rust Alt+Tab switcher daemon with GTK4 Layer Shell |
 | [`src/bin/audio_switcher_popup.rs`](src/bin/audio_switcher_popup.rs) | High-performance Rust audio device popup with Waybar pinning coordination |
-| [`src/bin/waybar_autohide.rs`](src/bin/waybar_autohide.rs) | Zero-overhead native Rust autohide daemon with direct Hyprland IPC |
 | [`Cargo.toml`](Cargo.toml) | Cargo build manifest for native Rust binaries |
 | [`switcher.sh`](switcher.sh) | Switcher IPC CLI and launcher script (runs Rust binary directly) |
 | [`audio-switcher.sh`](audio-switcher.sh) | Audio Waybar module helper and popup toggler (runs Rust binary directly) |
-| [`waybar-autohide.sh`](waybar-autohide.sh) | Autohide daemon launcher (runs Rust binary directly) |
+| [`waybar-autohide.sh`](waybar-autohide.sh) | Autohide daemon for Waybar with top/bottom edge tracking |
 | [`waybar/`](waybar/) | Liquid Glass status bar layout and stylesheet |
 | [`wlogout/`](wlogout/) | Fullscreen typography power menu layout and CSS |
 | [`autostart.conf`](autostart.conf) | Startup daemons and background services |

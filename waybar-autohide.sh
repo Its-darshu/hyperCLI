@@ -1,20 +1,8 @@
 #!/usr/bin/env bash
-# Reveal waybar when the cursor touches the bottom screen edge; hide it otherwise.
-# Supports pinning via /run/user/<uid>/waybar-pinned.
-# Native Rust daemon runner with fallback.
-
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-# Look for native Rust waybar-autohide daemon
-if [ -x "$DIR/waybar-autohide" ]; then
-    exec "$DIR/waybar-autohide"
-elif [ -x "$DIR/target/release/waybar-autohide" ]; then
-    exec "$DIR/target/release/waybar-autohide"
-elif [ -x "$HOME/.config/hypr/scripts/waybar-autohide" ]; then
-    exec "$HOME/.config/hypr/scripts/waybar-autohide"
-elif [ -x "$HOME/Project/hyperland/target/release/waybar-autohide" ]; then
-    exec "$HOME/Project/hyperland/target/release/waybar-autohide"
-fi
+# Reveal waybar when the cursor touches the screen edge (top or bottom); hide it otherwise.
+# Supports pinning via /run/user/<uid>/waybar-pinned and position toggling.
+#
+# Uses PID tracking to detect waybar restarts and resync state.
 
 reveal_margin=20    # reveal when cursor is within this many px of the bottom edge
 hide_margin=80      # hide when cursor moves above this many px from the bottom
@@ -79,7 +67,12 @@ while true; do
     # kill -0 is a fast shell builtin syscall.
     if ! kill -0 "$last_pid" 2>/dev/null; then
         cur_pid=$(pgrep -x waybar 2>/dev/null | head -n 1)
-        [ -z "$cur_pid" ] && continue
+        if [ -z "$cur_pid" ]; then
+            nohup waybar >/dev/null 2>&1 &
+            sleep 0.5
+            cur_pid=$(pgrep -x waybar 2>/dev/null | head -n 1)
+            [ -z "$cur_pid" ] && continue
+        fi
 
         # Waybar restarted — sync state variables with actual config value
         sleep 0.5
