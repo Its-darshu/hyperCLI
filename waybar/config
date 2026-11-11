@@ -108,8 +108,8 @@
         "tooltip-format-wifi": "󰖩  {essid}\nSignal: {signalStrength}%\nIP: {ipaddr}",
         "tooltip-format-ethernet": "󰈀  {ifname}\nIP: {ipaddr}",
         "tooltip-format-disconnected": "Disconnected",
-        "on-click": "~/.config/hypr/scripts/wifi-menu.sh",
-        "on-click-right": "~/.config/hypr/scripts/wifi-toggle.sh toggle",
+        "on-click": "~/.config/hypr/scripts/network/wifi-menu.sh",
+        "on-click-right": "~/.config/hypr/scripts/network/wifi-toggle.sh toggle",
         "max-length": 20
     },
     "bluetooth": {
@@ -122,8 +122,8 @@
         "tooltip-format-enumerate-connected": "{device_alias}  {device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}  {device_address}  {device_battery_percentage}%",
         "on-click": "blueman-manager",
-        "on-click-right": "~/.config/hypr/scripts/bt-toggle.sh scan",
-        "on-click-middle": "~/.config/hypr/scripts/bt-toggle.sh toggle"
+        "on-click-right": "~/.config/hypr/scripts/network/bt-toggle.sh scan",
+        "on-click-middle": "~/.config/hypr/scripts/network/bt-toggle.sh toggle"
     },
     "backlight": {
         "format": "{icon}  {percent}%",
@@ -157,8 +157,8 @@
     "custom/audio-switcher": {
         "format": "{}",
         "return-type": "json",
-        "exec": "~/.config/hypr/scripts/audio-switcher.sh status",
-        "on-click": "~/.config/hypr/scripts/audio-switcher.sh popup",
+        "exec": "~/.config/hypr/scripts/waybar/audio-switcher.sh status",
+        "on-click": "~/.config/hypr/scripts/waybar/audio-switcher.sh popup",
         "interval": 30,
         "signal": 8,
         "tooltip": true
@@ -185,8 +185,8 @@
     "custom/theme": {
         "format": "{}",
         "return-type": "json",
-        "exec": "~/.config/hypr/scripts/theme-toggle.sh status",
-        "on-click": "~/.config/hypr/scripts/theme-toggle.sh toggle",
+        "exec": "~/.config/hypr/scripts/system/theme-toggle.sh status",
+        "on-click": "~/.config/hypr/scripts/system/theme-toggle.sh toggle",
         "interval": 3600,
         "signal": 9,
         "tooltip": true

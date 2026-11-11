@@ -8,8 +8,12 @@ SWITCHER_BIN=""
 # Look for native compiled Rust binary
 if [ -x "$DIR/window-switcher" ]; then
     SWITCHER_BIN="$DIR/window-switcher"
+elif [ -x "$DIR/../../target/release/window-switcher" ]; then
+    SWITCHER_BIN="$DIR/../../target/release/window-switcher"
 elif [ -x "$DIR/target/release/window-switcher" ]; then
     SWITCHER_BIN="$DIR/target/release/window-switcher"
+elif [ -x "$HOME/.config/hypr/scripts/desktop/window-switcher" ]; then
+    SWITCHER_BIN="$HOME/.config/hypr/scripts/desktop/window-switcher"
 elif [ -x "$HOME/.config/hypr/scripts/window-switcher" ]; then
     SWITCHER_BIN="$HOME/.config/hypr/scripts/window-switcher"
 elif [ -x "$HOME/Project/hyperland/target/release/window-switcher" ]; then

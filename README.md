@@ -22,7 +22,7 @@ git clone https://github.com/Its-darshu/hyperCLI.git ~/Project/hyperland
 cd ~/Project/hyperland
 
 # 2. Run the automated installer
-bash setup-hyprland-fedora.sh
+bash install/setup-hyprland-fedora.sh
 
 # 3. Log out and select Hyprland at the login screen
 ```
@@ -51,21 +51,36 @@ bash setup-hyprland-fedora.sh
 
 ## Repository Structure
 
-| File / Folder | Purpose |
-| :--- | :--- |
-| [`hyprland.conf`](hyprland.conf) | Primary Hyprland configuration, monitors, animations, blur |
-| [`keybinds.conf`](keybinds.conf) | Keybindings and modifier release triggers |
-| [`src/bin/window_switcher.rs`](src/bin/window_switcher.rs) | High-performance Rust Alt+Tab switcher daemon with GTK4 Layer Shell |
-| [`src/bin/audio_switcher_popup.rs`](src/bin/audio_switcher_popup.rs) | High-performance Rust audio device popup with Waybar pinning coordination |
-| [`Cargo.toml`](Cargo.toml) | Cargo build manifest for native Rust binaries |
-| [`switcher.sh`](switcher.sh) | Switcher IPC CLI and launcher script (runs Rust binary directly) |
-| [`audio-switcher.sh`](audio-switcher.sh) | Audio Waybar module helper and popup toggler (runs Rust binary directly) |
-| [`waybar-autohide.sh`](waybar-autohide.sh) | Autohide daemon for Waybar with top/bottom edge tracking |
-| [`waybar/`](waybar/) | Liquid Glass status bar layout and stylesheet |
-| [`wlogout/`](wlogout/) | Fullscreen typography power menu layout and CSS |
-| [`autostart.conf`](autostart.conf) | Startup daemons and background services |
-| [`rules.conf`](rules.conf) | Window placement, floating, and layer blur rules |
-| [`INSTRUCTIONS.md`](INSTRUCTIONS.md) | Detailed installation, configuration, and keybinding guide |
+```text
+hyperCLI/
+├── config/              # Hyprland core configuration files
+│   ├── hyprland.conf    # Main configuration, display, animations, and blur
+│   ├── keybinds.conf    # Keybindings and modifier release triggers
+│   ├── autostart.conf   # Startup daemons and background services
+│   ├── rules.conf       # Window placement, floating, and layer blur rules
+│   ├── hypridle.conf    # Idle management and screen dimming
+│   └── hyprlock.conf    # Lock screen layout and authentication
+├── scripts/             # Modular shell helper scripts
+│   ├── system/          # Brightness, volume, night light, theme toggler
+│   ├── network/         # WiFi and Bluetooth menu and toggles
+│   ├── desktop/         # Wallpaper shifter, app launcher, window switcher, maximize/restore
+│   ├── waybar/          # Waybar autohide daemon, pin toggle, position toggle, audio switcher
+│   └── utilities/       # Clipboard picker and system utilities
+├── src/                 # Native compiled Rust application source
+│   └── bin/
+│       ├── window_switcher.rs       # macOS Liquid Glass Alt+Tab switcher daemon
+│       └── audio_switcher_popup.rs  # Audio output selector popup
+├── waybar/              # Liquid Glass status bar layout and stylesheet
+├── wlogout/             # Fullscreen typography power menu layout and CSS
+├── install/             # System and tool installation scripts
+│   ├── setup-hyprland-fedora.sh     # Fedora base system package installer
+│   └── setup-window-tools.sh        # Rust switcher and popup build/deploy script
+├── tests/               # Repository verification and test suites
+│   └── verify-repo.sh   # Syntax, path reference, and build checks
+├── Cargo.toml           # Cargo manifest for native Rust binaries
+├── README.md
+└── INSTRUCTIONS.md
+```
 
 ---
 
