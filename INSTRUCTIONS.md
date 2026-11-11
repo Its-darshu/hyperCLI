@@ -35,7 +35,7 @@ Comprehensive guide to installing, configuring, and using the Liquid Glass Hyprl
 ```bash
 git clone https://github.com/Its-darshu/hyperCLI.git ~/Project/hyperland
 cd ~/Project/hyperland
-bash setup-hyprland-fedora.sh
+bash install/setup-hyprland-fedora.sh
 ```
 
 ### 2. Log in to Hyprland
@@ -54,8 +54,12 @@ This repository is the source code repository. Hyprland and Waybar read their ac
 
 | Repository Path | Live Target Path | Description |
 | :--- | :--- | :--- |
-| `*.conf` | `~/.config/hypr/` | Core Hyprland configuration files |
-| `*.sh`, `*.py` | `~/.config/hypr/scripts/` | Shell and Python helper scripts |
+| `config/*.conf` | `~/.config/hypr/` & `~/.config/hypr/config/` | Core Hyprland configuration files |
+| `scripts/system/*.sh` | `~/.config/hypr/scripts/system/` | System, brightness, volume, theme scripts |
+| `scripts/network/*.sh` | `~/.config/hypr/scripts/network/` | WiFi and Bluetooth controls |
+| `scripts/desktop/*.sh` | `~/.config/hypr/scripts/desktop/` | Wallpaper, launcher, switcher, window scripts |
+| `scripts/waybar/*.sh` | `~/.config/hypr/scripts/waybar/` | Waybar autohide, toggles, audio switcher |
+| `scripts/utilities/*.sh` | `~/.config/hypr/scripts/utilities/` | Clipboard history picker & helpers |
 | `waybar/` | `~/.config/waybar/` | Status bar layout and Liquid Glass CSS |
 | `wlogout/` | `~/.config/wlogout/` | Fullscreen typography power menu |
 | `fish/` | `~/.config/fish/` | Fish shell functions and configuration |
@@ -97,10 +101,10 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 | :--- | :--- | :--- |
 | `Super + Enter` | Terminal | GNOME Terminal |
 | `Super + Q` | Close Window | `killactive` |
-| `Super + A` | Application Launcher | Fuzzel (`launcher.sh`) |
+| `Super + A` | Application Launcher | Fuzzel (`scripts/desktop/launcher.sh`) |
 | `Super + E` | File Manager | Thunar |
 | `Super + B` | Web Browser | Brave Browser |
-| `Super + V` | Clipboard Picker | Cliphist Picker (`cliphist-picker.sh`) |
+| `Super + V` | Clipboard Picker | Cliphist Picker (`scripts/utilities/cliphist-picker.sh`) |
 
 ### Window Management & Navigation
 | Shortcut | Action |
@@ -138,16 +142,16 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 | `XF86MonBrightnessUp` | Display Brightness Up (+5%) with on-screen HUD |
 | `XF86MonBrightnessDown` | Display Brightness Down (-5%) with on-screen HUD |
 | `Super + N` | Toggle Night Light (warm color filter via `hyprsunset`) |
-| `Super + Shift + T` | Toggle Dark / White (Light) theme (`theme-toggle.sh`) |
-| `Super + Shift + B` | Toggle Waybar autohide / pin status |
-| `Super + Ctrl + B` | Toggle Waybar position (top ↔ bottom) |
+| `Super + Shift + T` | Toggle Dark / White (Light) theme (`scripts/system/theme-toggle.sh`) |
+| `Super + Shift + B` | Toggle Waybar autohide / pin status (`scripts/waybar/waybar-toggle.sh`) |
+| `Super + Ctrl + B` | Toggle Waybar position (top ↔ bottom) (`scripts/waybar/waybar-position-toggle.sh`) |
 | `XF86AudioPlay / Pause` | Media Play / Pause (`playerctl`) |
 | `XF86AudioNext / Prev` | Next / Previous track (`playerctl`) |
 
 ### Wallpaper & Session
 | Shortcut | Action |
 | :--- | :--- |
-| `Super + W` | Next live wallpaper (`wallpaper-shift.sh next`) |
+| `Super + W` | Next live wallpaper (`scripts/desktop/wallpaper-shift.sh next`) |
 | `Super + Shift + W` | Interactive live wallpaper picker |
 | `Super + Alt + W` | Pause / resume live video wallpaper |
 | `Print` | Capture fullscreen screenshot (saved + clipboard) |
@@ -163,7 +167,7 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 
 ### Liquid Glass Waybar & Autohide
 - **Design**: Floating segmented frosted glass capsules (Workspaces & Title, Clock & Calendar, Hardware & Controls).
-- **Autohide Daemon**: Managed by `waybar-autohide.sh`. Waybar remains tucked away at the active screen edge (top or bottom) and reveals automatically on edge mouse hover.
+- **Autohide Daemon**: Managed by `scripts/waybar/waybar-autohide.sh`. Waybar remains tucked away at the active screen edge (top or bottom) and reveals automatically on edge mouse hover.
 - **Position Toggle**: Press `Super + Ctrl + B` to switch Waybar position between **top** and **bottom** instantly and persistently. Autohide edge tracking automatically adjusts to the active position.
 - **Pinning**: Press `Super + Shift + B` to pin the bar permanently visible or unpin it back to autohide mode.
 
@@ -173,18 +177,18 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 - **System Integration**: Dynamically toggles system GTK themes (`adw-gtk3-dark` ↔ `adw-gtk3`), desktop color-scheme (`prefer-dark` ↔ `prefer-light`), and GTK3/GTK4 `settings.ini`, updating all GTK and desktop applications instantly while keeping the terminal permanently in dark mode and preserving Waybar's liquid glass design.
 
 ### Interactive Audio Output Switcher
-- Clicking the audio module on Waybar triggers `audio-switcher.sh popup` (backed by the native Rust `audio-switcher-popup`).
+- Clicking the audio module on Waybar triggers `scripts/waybar/audio-switcher.sh popup` (backed by the native Rust `audio-switcher-popup`).
 - Features an iOS Control Center style frosted glass popup that automatically lists all connected Bluetooth devices, built-in speakers, 3.5mm headphones, and HDMI audio sinks.
 - Automatically coordinates with the Waybar autohide daemon via SIGUSR2 to keep the bar pinned while the popup is visible, and cleans up cleanly on exit.
 - Switching devices automatically migrates all running audio streams and normalizes volume levels seamlessly.
 
 ### Live Wallpaper Shifter
-- Managed by `wallpaper-shift.sh` using `mpvpaper`.
+- Managed by `scripts/desktop/wallpaper-shift.sh` using `mpvpaper`.
 - Cycles 4K video wallpapers seamlessly with battery detection (automatically pauses live rendering when on battery power to preserve battery life).
 
 ### Smart Minimize & Restore
 - `Super + Down` sends any window to `special:minimized`.
-- `Super + Up` restores the most recently minimized window back to your active workspace, or maximizes the current window if nothing is minimized.
+- `Super + Up` restores the most recently minimized window back to your active workspace, or maximizes the current window if nothing is minimized (`scripts/desktop/max-restore.sh`).
 - The Alt+Tab switcher marks minimized windows with a `Min` badge and restores them directly when selected.
 
 ---
@@ -194,11 +198,11 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 ### Alt+Tab isn't responding
 Verify that the background daemon is running:
 ```bash
-~/.config/hypr/scripts/switcher.sh status
+~/.config/hypr/scripts/desktop/switcher.sh status
 ```
 If not running, launch it manually or restart:
 ```bash
-~/.config/hypr/scripts/switcher.sh init
+~/.config/hypr/scripts/desktop/switcher.sh init
 ```
 
 ### Checking for Configuration Errors
@@ -211,5 +215,5 @@ If errors are reported, check the file indicated and review recent edits.
 ### Restarting Waybar
 ```bash
 pkill -x waybar
-~/.config/hypr/scripts/waybar-autohide.sh &
+~/.config/hypr/scripts/waybar/waybar-autohide.sh &
 ```

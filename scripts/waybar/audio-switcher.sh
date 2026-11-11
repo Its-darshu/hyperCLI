@@ -39,8 +39,12 @@ case "$1" in
         # Look for native compiled Rust binary
         if [ -x "$DIR/audio-switcher-popup" ]; then
             exec "$DIR/audio-switcher-popup"
+        elif [ -x "$DIR/../../target/release/audio-switcher-popup" ]; then
+            exec "$DIR/../../target/release/audio-switcher-popup"
         elif [ -x "$DIR/target/release/audio-switcher-popup" ]; then
             exec "$DIR/target/release/audio-switcher-popup"
+        elif [ -x "$HOME/.config/hypr/scripts/waybar/audio-switcher-popup" ]; then
+            exec "$HOME/.config/hypr/scripts/waybar/audio-switcher-popup"
         elif [ -x "$HOME/.config/hypr/scripts/audio-switcher-popup" ]; then
             exec "$HOME/.config/hypr/scripts/audio-switcher-popup"
         elif [ -x "$HOME/Project/hyperland/target/release/audio-switcher-popup" ]; then

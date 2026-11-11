@@ -89,13 +89,19 @@ echo "[6/6] Installing GNOME Settings launcher fixes..."
 # override .desktop files inject XDG_CURRENT_DESKTOP=GNOME so Settings (and
 # every panel) opens normally.
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-if [ -d "$SCRIPT_DIR/local-apps" ]; then
+REPO_DIR="$(dirname "$SCRIPT_DIR")"
+if [ -d "$REPO_DIR/local-apps" ]; then
+  mkdir -p ~/.local/share/applications
+  cp "$REPO_DIR"/local-apps/*.desktop ~/.local/share/applications/
+  update-desktop-database ~/.local/share/applications 2>/dev/null || true
+  echo "  GNOME Settings + panels patched to launch under Hyprland"
+elif [ -d "$SCRIPT_DIR/local-apps" ]; then
   mkdir -p ~/.local/share/applications
   cp "$SCRIPT_DIR"/local-apps/*.desktop ~/.local/share/applications/
   update-desktop-database ~/.local/share/applications 2>/dev/null || true
   echo "  GNOME Settings + panels patched to launch under Hyprland"
 else
-  echo "  local-apps/ not found next to this script - skipping"
+  echo "  local-apps/ not found - skipping"
 fi
 
 echo ""
