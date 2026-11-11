@@ -29,14 +29,19 @@ sudo dnf install -y \
   thunar \
   thunar-volman
 
-# Notifications, screenshots, clipboard
+# Notifications, screenshots, clipboard, utilities
 sudo dnf install -y \
   dunst \
   grim \
   slurp \
   wl-clipboard \
   cliphist \
-  swappy
+  swappy \
+  jq \
+  cargo \
+  gtk4-devel \
+  gtk4-layer-shell \
+  gtk4-layer-shell-devel
 
 # System controls
 sudo dnf install -y \

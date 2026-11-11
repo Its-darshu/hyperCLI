@@ -11,7 +11,7 @@ mode="${1:-copy}"
 clear_entry="Clear clipboard history"
 
 threshold=10
-poll=0.05
+poll=0.08
 
 if pgrep -x fuzzel >/dev/null; then
     pkill -x fuzzel

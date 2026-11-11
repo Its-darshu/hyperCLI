@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 # Reveal waybar when the cursor touches the bottom screen edge; hide it otherwise.
-# Supports pinning via /tmp/waybar-pinned.
-#
-# Uses PID tracking to detect waybar restarts and resync state.
+# Supports pinning via /run/user/<uid>/waybar-pinned.
+# Native Rust daemon runner with fallback.
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Look for native Rust waybar-autohide daemon
+if [ -x "$DIR/waybar-autohide" ]; then
+    exec "$DIR/waybar-autohide"
+elif [ -x "$DIR/target/release/waybar-autohide" ]; then
+    exec "$DIR/target/release/waybar-autohide"
+elif [ -x "$HOME/.config/hypr/scripts/waybar-autohide" ]; then
+    exec "$HOME/.config/hypr/scripts/waybar-autohide"
+elif [ -x "$HOME/Project/hyperland/target/release/waybar-autohide" ]; then
+    exec "$HOME/Project/hyperland/target/release/waybar-autohide"
+fi
 
 reveal_margin=20    # reveal when cursor is within this many px of the bottom edge
 hide_margin=80      # hide when cursor moves above this many px from the bottom

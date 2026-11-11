@@ -60,35 +60,26 @@ set_theme() {
         fi
 
         # 6. Update Cursor / VS Code if present
-        python3 -c '
-import json, os
-path = os.path.expanduser("~/.config/Cursor/User/settings.json")
-if os.path.exists(path):
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-        data["workbench.colorTheme"] = "Default Light Modern"
-        data["window.autoDetectColorScheme"] = True
-        with open(path, "w") as f:
-            json.dump(data, f, indent=4)
-    except Exception:
-        pass
-' 2>/dev/null || true
+        cursor_settings="$HOME/.config/Cursor/User/settings.json"
+        if [ -f "$cursor_settings" ] && command -v jq >/dev/null 2>&1; then
+            tmp=$(mktemp)
+            if jq '.["workbench.colorTheme"] = "Default Light Modern" | .["window.autoDetectColorScheme"] = true' "$cursor_settings" > "$tmp" 2>/dev/null; then
+                mv -f "$tmp" "$cursor_settings"
+            else
+                rm -f "$tmp"
+            fi
+        fi
 
         # 7. Update Brave browser theme if present
-        python3 -c '
-import json, os
-path = os.path.expanduser("~/.config/BraveSoftware/Brave-Browser/Default/Preferences")
-if os.path.exists(path):
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-        data.setdefault("browser", {}).setdefault("theme", {})["color_scheme"] = 1
-        with open(path, "w") as f:
-            json.dump(data, f)
-    except Exception:
-        pass
-' 2>/dev/null || true
+        brave_prefs="$HOME/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+        if [ -f "$brave_prefs" ] && command -v jq >/dev/null 2>&1; then
+            tmp=$(mktemp)
+            if jq '.browser.theme.color_scheme = 1' "$brave_prefs" > "$tmp" 2>/dev/null; then
+                mv -f "$tmp" "$brave_prefs"
+            else
+                rm -f "$tmp"
+            fi
+        fi
 
         # 8. Notify user
         if command -v dunstify >/dev/null 2>&1; then
@@ -132,35 +123,26 @@ if os.path.exists(path):
         fi
 
         # 6. Update Cursor / VS Code if present
-        python3 -c '
-import json, os
-path = os.path.expanduser("~/.config/Cursor/User/settings.json")
-if os.path.exists(path):
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-        data["workbench.colorTheme"] = "Cursor Dark"
-        data["window.autoDetectColorScheme"] = True
-        with open(path, "w") as f:
-            json.dump(data, f, indent=4)
-    except Exception:
-        pass
-' 2>/dev/null || true
+        cursor_settings="$HOME/.config/Cursor/User/settings.json"
+        if [ -f "$cursor_settings" ] && command -v jq >/dev/null 2>&1; then
+            tmp=$(mktemp)
+            if jq '.["workbench.colorTheme"] = "Cursor Dark" | .["window.autoDetectColorScheme"] = true' "$cursor_settings" > "$tmp" 2>/dev/null; then
+                mv -f "$tmp" "$cursor_settings"
+            else
+                rm -f "$tmp"
+            fi
+        fi
 
         # 7. Update Brave browser theme if present
-        python3 -c '
-import json, os
-path = os.path.expanduser("~/.config/BraveSoftware/Brave-Browser/Default/Preferences")
-if os.path.exists(path):
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-        data.setdefault("browser", {}).setdefault("theme", {})["color_scheme"] = 2
-        with open(path, "w") as f:
-            json.dump(data, f)
-    except Exception:
-        pass
-' 2>/dev/null || true
+        brave_prefs="$HOME/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+        if [ -f "$brave_prefs" ] && command -v jq >/dev/null 2>&1; then
+            tmp=$(mktemp)
+            if jq '.browser.theme.color_scheme = 2' "$brave_prefs" > "$tmp" 2>/dev/null; then
+                mv -f "$tmp" "$brave_prefs"
+            else
+                rm -f "$tmp"
+            fi
+        fi
 
         # 8. Notify user
         if command -v dunstify >/dev/null 2>&1; then

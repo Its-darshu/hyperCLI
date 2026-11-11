@@ -25,3 +25,4 @@ target/
 Cargo.lock
 window-switcher
 audio-switcher-popup
+waybar-autohide
