@@ -22,6 +22,23 @@ if [ ${#WALLPAPERS[@]} -eq 0 ]; then
     exit 1
 fi
 
+stop_wallpaper() {
+    if pgrep -x mpvpaper >/dev/null; then
+        # Graceful termination first: allow video decoder and Wayland surface to detach cleanly
+        pkill -TERM -x mpvpaper 2>/dev/null || true
+        for _ in {1..10}; do
+            if ! pgrep -x mpvpaper >/dev/null; then
+                break
+            fi
+            sleep 0.05
+        done
+        # Fallback to SIGKILL only if process fails to terminate within 500ms
+        if pgrep -x mpvpaper >/dev/null; then
+            pkill -KILL -x mpvpaper 2>/dev/null || true
+        fi
+    fi
+}
+
 set_wallpaper() {
     local target="$1"
     if [ ! -f "$target" ]; then
@@ -32,9 +49,9 @@ set_wallpaper() {
     # Save active state
     echo "$target" > "$STATE_FILE"
 
-    # Terminate running mpvpaper instance
-    pkill -9 -x mpvpaper 2>/dev/null || true
-    sleep 0.2
+    # Terminate running mpvpaper instance gracefully
+    stop_wallpaper
+    sleep 0.1
 
     # Launch wallpaper with full screen fill, hardware decode, and auto-pause (-p) to save CPU/battery when windows cover it
     hyprctl dispatch exec -- "mpvpaper -p -o 'no-audio loop hwdec=auto --keepaspect=no' '*' '$target'"
@@ -47,7 +64,7 @@ set_wallpaper() {
 
 toggle_wallpaper() {
     if pgrep -x mpvpaper >/dev/null; then
-        killall -9 mpvpaper 2>/dev/null || true
+        stop_wallpaper
         notify-send "Live Wallpaper Paused" "Wallpaper rendering paused" -i media-playback-pause -r 9911
     else
         if [ -f "$STATE_FILE" ] && [ -f "$(cat "$STATE_FILE")" ]; then

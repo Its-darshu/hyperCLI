@@ -12,6 +12,23 @@ mkdir -p "$HOME/.config/hypr/config"
 cp -f "$REPO_DIR"/config/*.conf "$HOME/.config/hypr/config/"
 cp -f "$REPO_DIR"/config/hyprland.conf "$HOME/.config/hypr/hyprland.conf"
 
+# Replace any hardcoded home paths in AQ_DRM_DEVICES with current $HOME
+for conf_target in "$HOME/.config/hypr/hyprland.conf" "$HOME/.config/hypr/config/hyprland.conf"; do
+    if [ -f "$conf_target" ]; then
+        sed -i "s|/home/[^/]*/\.config/hypr|${HOME}/.config/hypr|g" "$conf_target"
+    fi
+done
+
+# Ensure hardware DRM symlinks exist dynamically
+if [ ! -e "$HOME/.config/hypr/intel-card" ]; then
+    intel_pci=$(find /dev/dri/by-path/ -name "*:00:02.0-card" 2>/dev/null | head -n1)
+    [ -n "$intel_pci" ] && ln -sf "$intel_pci" "$HOME/.config/hypr/intel-card"
+fi
+if [ ! -e "$HOME/.config/hypr/nvidia-card" ]; then
+    nvidia_pci=$(find /dev/dri/by-path/ -name "*:01:00.0-card" 2>/dev/null | head -n1)
+    [ -n "$nvidia_pci" ] && ln -sf "$nvidia_pci" "$HOME/.config/hypr/nvidia-card"
+fi
+
 # Provide top-level symlinks for backward compatibility
 for conf in autostart.conf keybinds.conf rules.conf hypridle.conf hyprlock.conf; do
     ln -sf "config/$conf" "$HOME/.config/hypr/$conf"

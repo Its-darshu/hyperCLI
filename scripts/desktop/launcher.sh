@@ -4,7 +4,7 @@
 # touching the mouse closes the launcher.
 
 threshold=10   # px of cursor movement that counts as "moved"
-poll=0.08      # seconds between cursor checks
+poll=0.10      # seconds between cursor checks (10 Hz balance of responsiveness and low CPU)
 
 # If a launcher is already up, a second press just closes it (toggle).
 if pgrep -x fuzzel >/dev/null; then

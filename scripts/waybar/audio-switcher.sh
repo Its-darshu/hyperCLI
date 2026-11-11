@@ -37,20 +37,17 @@ case "$1" in
         fi
 
         # Look for native compiled Rust binary
+        cfg_dir="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts"
         if [ -x "$DIR/audio-switcher-popup" ]; then
             exec "$DIR/audio-switcher-popup"
         elif [ -x "$DIR/../../target/release/audio-switcher-popup" ]; then
             exec "$DIR/../../target/release/audio-switcher-popup"
         elif [ -x "$DIR/target/release/audio-switcher-popup" ]; then
             exec "$DIR/target/release/audio-switcher-popup"
-        elif [ -x "$HOME/.config/hypr/scripts/waybar/audio-switcher-popup" ]; then
-            exec "$HOME/.config/hypr/scripts/waybar/audio-switcher-popup"
-        elif [ -x "$HOME/.config/hypr/scripts/audio-switcher-popup" ]; then
-            exec "$HOME/.config/hypr/scripts/audio-switcher-popup"
-        elif [ -x "$HOME/Project/hyperland/target/release/audio-switcher-popup" ]; then
-            exec "$HOME/Project/hyperland/target/release/audio-switcher-popup"
-        elif [ -x "$HOME/Project/hyperland/audio-switcher-popup" ]; then
-            exec "$HOME/Project/hyperland/audio-switcher-popup"
+        elif [ -x "$cfg_dir/waybar/audio-switcher-popup" ]; then
+            exec "$cfg_dir/waybar/audio-switcher-popup"
+        elif [ -x "$cfg_dir/audio-switcher-popup" ]; then
+            exec "$cfg_dir/audio-switcher-popup"
         else
             echo "ERROR: audio-switcher-popup binary not found. Build it with: cargo build --release" >&2
             exit 1
