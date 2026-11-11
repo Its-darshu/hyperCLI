@@ -34,7 +34,16 @@ if [ -f "$pid_file" ]; then
     kill -USR2 "$(cat "$pid_file")" 2>/dev/null || true
 fi
 
-# Restart waybar to apply exclusive zone setting
-pkill -x waybar
-sleep 0.3
+# Restart waybar to apply exclusive zone setting cleanly without duplicate processes
+pkill -x waybar 2>/dev/null || true
+for i in {1..20}; do
+    if ! pgrep -x waybar >/dev/null; then
+        break
+    fi
+    sleep 0.05
+done
+if pgrep -x waybar >/dev/null; then
+    pkill -9 -x waybar 2>/dev/null || true
+    sleep 0.05
+fi
 nohup waybar >/dev/null 2>&1 &

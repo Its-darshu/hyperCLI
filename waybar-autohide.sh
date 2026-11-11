@@ -67,12 +67,7 @@ while true; do
     # kill -0 is a fast shell builtin syscall.
     if ! kill -0 "$last_pid" 2>/dev/null; then
         cur_pid=$(pgrep -x waybar 2>/dev/null | head -n 1)
-        if [ -z "$cur_pid" ]; then
-            nohup waybar >/dev/null 2>&1 &
-            sleep 0.5
-            cur_pid=$(pgrep -x waybar 2>/dev/null | head -n 1)
-            [ -z "$cur_pid" ] && continue
-        fi
+        [ -z "$cur_pid" ] && continue
 
         # Waybar restarted — sync state variables with actual config value
         sleep 0.5
@@ -84,6 +79,15 @@ while true; do
         pos_mode=$(get_position)
         last_pid="$cur_pid"
         continue
+    fi
+
+    # Deduplication guard: kill excess Waybar processes if more than one exists
+    readarray -t all_wbs < <(pgrep -x waybar 2>/dev/null)
+    if [ "${#all_wbs[@]}" -gt 1 ]; then
+        for ((i=0; i<${#all_wbs[@]}-1; i++)); do
+            kill -9 "${all_wbs[$i]}" 2>/dev/null || true
+        done
+        last_pid="${all_wbs[-1]}"
     fi
 
     # Pinned state check
