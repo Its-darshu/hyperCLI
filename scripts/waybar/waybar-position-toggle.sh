@@ -4,11 +4,14 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
 pid_file="$runtime_dir/waybar-autohide.pid"
 lock_file="$runtime_dir/waybar-position-toggle.lock"
-waybar_config="$HOME/.config/waybar/config"
-project_config="$HOME/Project/hyperland/waybar/config"
+waybar_config="${XDG_CONFIG_HOME:-$HOME/.config}/waybar/config"
+project_config="$REPO_DIR/waybar/config"
 
 # Prevent concurrent toggle executions
 exec 200>"$lock_file"

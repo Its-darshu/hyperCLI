@@ -6,20 +6,17 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SWITCHER_BIN=""
 
 # Look for native compiled Rust binary
+cfg_dir="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/scripts"
 if [ -x "$DIR/window-switcher" ]; then
     SWITCHER_BIN="$DIR/window-switcher"
 elif [ -x "$DIR/../../target/release/window-switcher" ]; then
     SWITCHER_BIN="$DIR/../../target/release/window-switcher"
 elif [ -x "$DIR/target/release/window-switcher" ]; then
     SWITCHER_BIN="$DIR/target/release/window-switcher"
-elif [ -x "$HOME/.config/hypr/scripts/desktop/window-switcher" ]; then
-    SWITCHER_BIN="$HOME/.config/hypr/scripts/desktop/window-switcher"
-elif [ -x "$HOME/.config/hypr/scripts/window-switcher" ]; then
-    SWITCHER_BIN="$HOME/.config/hypr/scripts/window-switcher"
-elif [ -x "$HOME/Project/hyperland/target/release/window-switcher" ]; then
-    SWITCHER_BIN="$HOME/Project/hyperland/target/release/window-switcher"
-elif [ -x "$HOME/Project/hyperland/window-switcher" ]; then
-    SWITCHER_BIN="$HOME/Project/hyperland/window-switcher"
+elif [ -x "$cfg_dir/desktop/window-switcher" ]; then
+    SWITCHER_BIN="$cfg_dir/desktop/window-switcher"
+elif [ -x "$cfg_dir/window-switcher" ]; then
+    SWITCHER_BIN="$cfg_dir/window-switcher"
 fi
 
 if [ -z "$SWITCHER_BIN" ]; then

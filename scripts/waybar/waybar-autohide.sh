@@ -81,13 +81,16 @@ while true; do
         continue
     fi
 
-    # Deduplication guard: kill excess Waybar processes if more than one exists
-    readarray -t all_wbs < <(pgrep -x waybar 2>/dev/null)
-    if [ "${#all_wbs[@]}" -gt 1 ]; then
-        for ((i=0; i<${#all_wbs[@]}-1; i++)); do
-            kill -9 "${all_wbs[$i]}" 2>/dev/null || true
-        done
-        last_pid="${all_wbs[-1]}"
+    # Deduplication guard: check once every ~6s (50 * 120ms) instead of every 120ms to eliminate continuous fork overhead
+    pid_check_counter=$(( (pid_check_counter + 1) % 50 ))
+    if [ "$pid_check_counter" -eq 0 ]; then
+        readarray -t all_wbs < <(pgrep -x waybar 2>/dev/null)
+        if [ "${#all_wbs[@]}" -gt 1 ]; then
+            for ((i=0; i<${#all_wbs[@]}-1; i++)); do
+                kill -9 "${all_wbs[$i]}" 2>/dev/null || true
+            done
+            last_pid="${all_wbs[-1]}"
+        fi
     fi
 
     # Pinned state check

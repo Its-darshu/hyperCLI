@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # Toggle Waybar autohide pinning and exclusive space.
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
 runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
 pinned_file="$runtime_dir/waybar-pinned"
 pid_file="$runtime_dir/waybar-autohide.pid"
-waybar_config="$HOME/.config/waybar/config"
-project_config="$HOME/Project/hyperland/waybar/config"
+waybar_config="${XDG_CONFIG_HOME:-$HOME/.config}/waybar/config"
+project_config="$REPO_DIR/waybar/config"
 
 if [ -f "$pinned_file" ]; then
     rm -f "$pinned_file"
