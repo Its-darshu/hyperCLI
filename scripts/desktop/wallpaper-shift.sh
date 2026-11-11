@@ -33,11 +33,11 @@ set_wallpaper() {
     echo "$target" > "$STATE_FILE"
 
     # Terminate running mpvpaper instance
-    killall -9 mpvpaper 2>/dev/null || true
+    pkill -9 -x mpvpaper 2>/dev/null || true
     sleep 0.2
 
-    # Launch 4K wallpaper with full screen fill (--keepaspect=no) and hardware decoding
-    nohup mpvpaper -o "no-audio loop hwdec=auto --keepaspect=no" '*' "$target" > /dev/null 2>&1 &
+    # Launch wallpaper with full screen fill, hardware decode, and auto-pause (-p) to save CPU/battery when windows cover it
+    hyprctl dispatch exec -- "mpvpaper -p -o 'no-audio loop hwdec=auto --keepaspect=no' '*' '$target'"
 
     # Send OS notification
     local name
