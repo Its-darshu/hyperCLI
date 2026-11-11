@@ -173,8 +173,9 @@ A custom, native Python GTK 3 Layer Shell switcher daemon with GPU-accelerated b
 - **System Integration**: Dynamically toggles system GTK themes (`adw-gtk3-dark` ↔ `adw-gtk3`), desktop color-scheme (`prefer-dark` ↔ `prefer-light`), and GTK3/GTK4 `settings.ini`, updating all GTK and desktop applications instantly while keeping the terminal permanently in dark mode and preserving Waybar's liquid glass design.
 
 ### Interactive Audio Output Switcher
-- Clicking the audio module on Waybar triggers `audio-switcher-popup.py`.
+- Clicking the audio module on Waybar triggers `audio-switcher.sh popup` (backed by the native Rust `audio-switcher-popup`).
 - Features an iOS Control Center style frosted glass popup that automatically lists all connected Bluetooth devices, built-in speakers, 3.5mm headphones, and HDMI audio sinks.
+- Automatically coordinates with the Waybar autohide daemon via SIGUSR2 to keep the bar pinned while the popup is visible, and cleans up cleanly on exit.
 - Switching devices automatically migrates all running audio streams and normalizes volume levels seamlessly.
 
 ### Live Wallpaper Shifter

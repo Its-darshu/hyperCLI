@@ -1,0 +1,25 @@
+[package]
+name = "hyperland-tools"
+version = "0.1.0"
+edition = "2021"
+authors = ["Its-darshu"]
+description = "Native Rust window switcher daemon and audio output popup for Hyprland"
+
+[[bin]]
+name = "window-switcher"
+path = "src/bin/window_switcher.rs"
+
+[[bin]]
+name = "audio-switcher-popup"
+path = "src/bin/audio_switcher_popup.rs"
+
+[dependencies]
+gtk4 = "0.9"
+gtk4-layer-shell = "0.4"
+glib = "0.20"
+gio = "0.20"
+gdk4 = "0.9"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+glob = "0.3"
+libc = "0.2"

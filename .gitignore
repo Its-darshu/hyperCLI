@@ -19,3 +19,9 @@ Videos/
 *.mkv
 *.avi
 current_wallpaper
+
+# Cargo target directory and binaries
+target/
+Cargo.lock
+window-switcher
+audio-switcher-popup

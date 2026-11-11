@@ -55,9 +55,11 @@ bash setup-hyprland-fedora.sh
 | :--- | :--- |
 | [`hyprland.conf`](hyprland.conf) | Primary Hyprland configuration, monitors, animations, blur |
 | [`keybinds.conf`](keybinds.conf) | Keybindings and modifier release triggers |
-| [`window-switcher.py`](window-switcher.py) | Liquid Glass Alt+Tab switcher daemon |
-| [`switcher.sh`](switcher.sh) | Switcher IPC CLI and launcher script |
-| [`audio-switcher-popup.py`](audio-switcher-popup.py) | Audio device selector popup |
+| [`src/bin/window_switcher.rs`](src/bin/window_switcher.rs) | High-performance Rust Alt+Tab switcher daemon with GTK4 Layer Shell |
+| [`src/bin/audio_switcher_popup.rs`](src/bin/audio_switcher_popup.rs) | High-performance Rust audio device popup with Waybar pinning coordination |
+| [`Cargo.toml`](Cargo.toml) | Cargo build manifest for native Rust binaries |
+| [`switcher.sh`](switcher.sh) | Switcher IPC CLI and launcher script (runs Rust binary with Python fallback) |
+| [`audio-switcher.sh`](audio-switcher.sh) | Audio Waybar module helper and popup toggler |
 | [`waybar/`](waybar/) | Liquid Glass status bar layout and stylesheet |
 | [`wlogout/`](wlogout/) | Fullscreen typography power menu layout and CSS |
 | [`autostart.conf`](autostart.conf) | Startup daemons and background services |
